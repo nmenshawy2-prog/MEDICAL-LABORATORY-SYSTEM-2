@@ -1,0 +1,103 @@
+# Simulated Medical Lab System in Google Colab
+import pandas as pd
+
+# In-memory 'tables'
+patients = []
+
+def add_patient(pid, name, phone, address, birthdate, job):
+    patient = {
+        "PatientID": pid,
+        "Name": name,
+        "Phone": phone,
+        "Address": address,
+        "BirthDate": birthdate,
+        "Job": job
+    }
+    patients.append(patient)
+    return "✅ Patient added successfully!"
+
+# Simple form
+from IPython.display import display
+import ipywidgets as widgets
+
+pid = widgets.Text(description="Patient ID")
+name = widgets.Text(description="Name")
+phone = widgets.Text(description="Phone")
+address = widgets.Text(description="Address")
+birthdate = widgets.Text(description="Birth Date")
+job = widgets.Text(description="Job")
+
+button = widgets.Button(description="Add Patient")
+
+output = widgets.Output()
+
+def on_button_click(b):
+    with output:
+        output.clear_output()
+        msg = add_patient(pid.value, name.value, phone.value, address.value, birthdate.value, job.value)
+        print(msg)
+
+button.on_click(on_button_click)
+
+display(pid, name, phone, address, birthdate, job, button, output)
+# --- Medical Tests ---
+tests = []
+
+def add_test(tid, name, price):
+    test = {
+        "TestID": tid,
+        "Name": name,
+        "Price": float(price)
+    }
+    tests.append(test)
+    return "✅ Test added successfully!"
+
+# Widgets for medical test
+test_id = widgets.Text(description="Test ID")
+test_name = widgets.Text(description="Test Name")
+test_price = widgets.Text(description="Price")
+
+test_button = widgets.Button(description="Add Test")
+test_output = widgets.Output()
+
+def on_test_click(b):
+    with test_output:
+        test_output.clear_output()
+        msg = add_test(test_id.value, test_name.value, test_price.value)
+        print(msg)
+
+test_button.on_click(on_test_click)
+display(widgets.HTML("<h3>Add Medical Test</h3>"))
+display(test_id, test_name, test_price, test_button, test_output)
+# --- Test Results ---
+results = []
+
+def add_result(test_id, date, patient_id, lab_id, result_text):
+    result = {
+        "TestID": test_id,
+        "Date": date,
+        "PatientID": patient_id,
+        "LaboratorianID": lab_id,
+        "Result": result_text
+    }
+    results.append(result)
+    return "✅ Test result recorded!"
+
+res_test_id = widgets.Text(description="Test ID")
+res_date = widgets.Text(description="Date")
+res_patient = widgets.Text(description="Patient ID")
+res_lab = widgets.Text(description="Lab ID")
+res_result = widgets.Text(description="Result")
+
+res_button = widgets.Button(description="Add Result")
+res_output = widgets.Output()
+
+def on_result_click(b):
+    with res_output:
+        res_output.clear_output()
+        msg = add_result(res_test_id.value, res_date.value, res_patient.value, res_lab.value, res_result.value)
+        print(msg)
+
+res_button.on_click(on_result_click)
+display(widgets.HTML("<h3>Add Test Result</h3>"))
+display(res_test_id, res_date, res_patient, res_lab, res_result, res_button, res_output)
